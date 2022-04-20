@@ -4,14 +4,12 @@ from necta.commands import run_necta
 
 #Goals:
 # 1. to be able to download different US shapefile datasets
-#  a. FIPS
-#  b. NECTA
-#  c. CBSA
 #  d. (optional) ZCTA
 #  e. (optional) RUCA
 #  f. (optional) any more from https://www2.census.gov/geo/tiger/
-#  g. GNIS
+#  g. GNIS (plus FIPS crosswalk)
 #  h. LZPS (is this the zip codes? Think it's city state product)
+# 2. FIPS shapefiles, gotta figure out which ones are actually important
 # 3. to be able to load different US datasets into a DB
 #  a. first as 'raw'
 #  b. then as 'cleaned up'
@@ -25,10 +23,6 @@ from necta.commands import run_necta
 # see: https://www.census.gov/programs-surveys/popest/geographies/reference-files.html
 # see: https://www.huduser.gov/portal/datasets/usps_crosswalk.html
 # see: https://postalpro.usps.com/address-quality/city-state-product
-
-#TODO: find FIPS dataset that is available for download
-
-#NECTA is next!
 
 
 #see: https://stackoverflow.com/questions/32812463/setting-schema-for-all-queries-of-a-connection-in-psycopg2-getting-race-conditi
