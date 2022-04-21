@@ -1,14 +1,16 @@
 from cbsa.commands import run_cbsa
 from fips.commands import run_fips
 from necta.commands import run_necta
+from puma.commands import run_puma
 
 #Goals:
 # 1. to be able to download different US shapefile datasets
 #  d. (optional) ZCTA
-#  e. (optional) RUCA
+#  e. (optional) RUCA (https://www.ers.usda.gov/webdocs/DataFiles/53241/ruca2010revised.xlsx?v=9111.7d)
 #  f. (optional) any more from https://www2.census.gov/geo/tiger/
 #  g. GNIS (plus FIPS crosswalk)
 #  h. LZPS (is this the zip codes? Think it's city state product)
+#  i. PUMA
 # 2. FIPS shapefiles, gotta figure out which ones are actually important
 # 3. to be able to load different US datasets into a DB
 #  a. first as 'raw'
@@ -23,7 +25,10 @@ from necta.commands import run_necta
 # see: https://www.census.gov/programs-surveys/popest/geographies/reference-files.html
 # see: https://www.huduser.gov/portal/datasets/usps_crosswalk.html
 # see: https://postalpro.usps.com/address-quality/city-state-product
-
+# see: https://www.census.gov/programs-surveys/geography/guidance/geo-areas/state-legis-dist.html
+# see: https://www.census.gov/programs-surveys/geography/guidance/geo-areas/congressional-dist.html
+# see: https://www.census.gov/newsroom/blogs/random-samplings/2011/07/what-are-census-blocks.html
+# see: https://www2.census.gov/geo/docs/maps-data/data/rel/
 
 #see: https://stackoverflow.com/questions/32812463/setting-schema-for-all-queries-of-a-connection-in-psycopg2-getting-race-conditi
 import psycopg2
@@ -51,7 +56,8 @@ def gen_cbsa_view():
 if __name__ == '__main__':
     print('Hello World')
     with connect_db() as db:
-        run_cbsa(db, 2020, force=True)
-        run_fips(db, 2014, force=True)
-        run_necta(db, 2020, force=True)
+        #run_cbsa(db, 2020, force=True)
+        #run_fips(db, 2014, force=True)
+        #run_necta(db, 2020, force=True)
+        #run_puma(db, 2020, force=True)
     print('yo')
