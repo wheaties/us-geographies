@@ -1,4 +1,4 @@
-from fileops.download import LocalFileDownloader
+from iops.download import LocalFileDownloader
 
 _cd_shapefiles ={
     2012: 'https://www2.census.gov/geo/tiger/TIGER2012/CD/tl_2012_us_cd112.zip',

@@ -1,5 +1,5 @@
 from itertools import chain
-from fileops.download import LocalFileDownloader
+from iops.download import LocalFileDownloader
 
 
 # issues with 2013, 2014

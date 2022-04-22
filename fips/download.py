@@ -1,5 +1,5 @@
 from collections import namedtuple
-from fileops.download import download_to_cls
+from iops.download import download_to_cls
 
 
 gnis_url = {
