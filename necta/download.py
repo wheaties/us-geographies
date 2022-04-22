@@ -1,5 +1,5 @@
 from collections import namedtuple
-from fileops.download import LocalFileDownloader
+from fileops.download import download_to_cls
 
 
 # index out of range for 2013, header/footer offset different?
@@ -33,15 +33,4 @@ _necta_shape_files = {
 
 
 NECTAFiles = namedtuple('NECTAFiles', ['necta_combined', 'necta_cities', 'necta_shape'])
-
-
-#ok, we've done this 3x so it's time to refactor
-def download_files(year, root_folder=None):
-    downloader = LocalFileDownloader(root_folder)
-
-    def retrieve(url):
-        return downloader(url, year) if url is not None else None
-
-    return NECTAFiles(retrieve(_necta_combined_files.get(year)),
-                      retrieve(_necta_cities_files.get(year)),
-                      retrieve(_necta_shape_files.get(year)))
+download_files = download_to_cls(NECTAFiles, _necta_combined_files, _necta_cities_files, _necta_shape_files)

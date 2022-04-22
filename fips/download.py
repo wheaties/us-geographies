@@ -1,5 +1,5 @@
 from collections import namedtuple
-from fileops.download import LocalFileDownloader
+from fileops.download import download_to_cls
 
 
 gnis_url = {
@@ -34,12 +34,4 @@ _fips_all = {
 
 
 FIPSFiles = namedtuple('FIPSFiles', ['state_geocodes', 'all_geocodes'])
-
-
-def download_files(year, root_folder=None):
-    downloader = LocalFileDownloader(root_folder)
-
-    def retrieve(url):
-        return downloader(url, year) if url is not None else None
-
-    return FIPSFiles(retrieve(_fips_state.get(year)), retrieve(_fips_all.get(year)))
+download_files = download_to_cls(FIPSFiles, _fips_state, _fips_all)

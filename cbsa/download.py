@@ -1,5 +1,5 @@
 from collections import namedtuple
-from fileops.download import LocalFileDownloader
+from fileops.download import download_to_cls
 
 
 # TODO: issue with 2013!
@@ -31,14 +31,4 @@ _csa_shapefiles = {
 
 
 CBSAFiles = namedtuple('CBSAFiles', ['cbsa_delineation', 'cbsa_shape', 'csa_shape'])
-
-
-def download_files(year, root_folder=None):
-    downloader = LocalFileDownloader(root_folder)
-
-    def retrieve(url):
-        return downloader(url, year) if url is not None else None
-
-    return CBSAFiles(retrieve(_cbsa_delineation_files.get(year)),
-                    retrieve(_cbsa_shapefiles.get(year)),
-                    retrieve(_csa_shapefiles.get(year)))
+download_files = download_to_cls(CBSAFiles, _cbsa_delineation_files, _cbsa_shapefiles, _csa_shapefiles)
