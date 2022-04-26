@@ -1,13 +1,13 @@
 from fips.download import download_files
-from fips.fips_stategeocodes import fips_stategeocodes, load_raw_fips_stategeocodes
-from fips.fips_allgeocodes import fips_allgeocodes, load_raw_fips_allgeocodes
+from fips.fips_stategeocodes import load_raw_fips_stategeocodes
+from fips.fips_state import load_fips_county_shapefile, load_fips_state_shapefile
+from fips.fips_allgeocodes import load_raw_fips_allgeocodes
 
 
 def run_fips(connection, year, root_folder=None, force=False):
-    files = download_files(year, root_folder)
+    files = download_files(year, root_folder, force)
 
-    fips_stategeocodes.setup(connection, year, force)
     load_raw_fips_stategeocodes(connection, files.state_geocodes, year, force)
-
-    fips_allgeocodes.setup(connection, year, force)
+    load_fips_state_shapefile(connection, files.state_shapes, year, force)
+    load_fips_county_shapefile(connection, files.county_shapes, year, force)
     load_raw_fips_allgeocodes(connection, files.all_geocodes, year, force)

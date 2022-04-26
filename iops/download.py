@@ -40,12 +40,12 @@ class LocalFileDownloader:
 
 
 def download_to_cls(cls, *lookup):
-    def download_files(year, root_folder=None):
+    def download_files(year, root_folder=None, force=False):
         downloader = LocalFileDownloader(root_folder)
         args = []
         for item in lookup:
             url = item.get(year)
-            args.append(downloader(url, year) if url is not None else None)
+            args.append(downloader(url, year, force) if url is not None else None)
 
         return cls(*args)
     return download_files

@@ -13,6 +13,7 @@ fips_stategeocodes.columns = ['region TEXT NOT NULL',
 
 
 def load_raw_fips_stategeocodes(connection, filepath, year, force=False):
+    fips_stategeocodes.setup(connection, year, force)
     with file_metadata(connection, filepath, fips_stategeocodes.group, force) as file_loaded:
         if not file_loaded or force:
             try:

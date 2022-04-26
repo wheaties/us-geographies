@@ -16,6 +16,7 @@ fips_allgeocodes.columns = ['summary_level TEXT NOT NULL',
 
 
 def load_raw_fips_allgeocodes(connection, filepath, year, force=False):
+    fips_allgeocodes.setup(connection, year, force)
     with file_metadata(connection, filepath, fips_allgeocodes.group, force) as file_loaded:
         if not file_loaded or force:
             try:

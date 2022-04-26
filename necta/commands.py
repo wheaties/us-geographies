@@ -1,7 +1,7 @@
 from necta.download import download_files
 from necta.necta_cities import load_raw_necta_cities, necta_cities
 from necta.necta_combined import load_raw_necta_combined, necta_combined
-from necta.necta_shape import load_necta_shapefile, necta_shape_setup
+from necta.necta_shape import load_necta_shapefile, necta_shapes
 
 
 def run_necta(connection, year, root_folder=None, force=False):
@@ -13,5 +13,5 @@ def run_necta(connection, year, root_folder=None, force=False):
     necta_combined.setup(connection, year, force)
     load_raw_necta_combined(connection, files.necta_combined, year, force)
 
-    necta_shape_setup(connection, year, force)
+    necta_shapes.setup(connection, year, force)
     load_necta_shapefile(connection, files.necta_shape, year, force)

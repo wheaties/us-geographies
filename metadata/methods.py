@@ -50,3 +50,15 @@ def record_file(connection, filepath, dataset, md5):
             ON CONFLICT (file_checksum, dataset)
             DO UPDATE SET file_name=%s, updated=now()''',
             (filepath.name, dataset, md5, filepath.name))
+
+
+def single_file_load(cls, parse_file):
+    def load_file_contents(connection, filepath, year, force=False):
+        cls.setup(connection, year, force)
+        with file_metadata(connection, filepath, cls.group, force) as file_loaded:
+            if not file_loaded or force:
+                records = parse_file(str(filepath))
+                print(f'Read {len(records)} records of {cls.group} at {filepath}.')
+                cls.populate(connection, year, records)
+
+    return load_file_contents

@@ -1,6 +1,5 @@
 import json
 import shapefile
-from itertools import chain
 
 
 def _sub_none_for_empty(value):
@@ -9,12 +8,12 @@ def _sub_none_for_empty(value):
     return value
 
 
-def parse_file(filepath, cls=list):
+def parse_file(filepath):
     output = []
     # shapefile.Reader says it can handle os.FileLike but can't do PathLib objects. :(
     sf = shapefile.Reader(str(filepath))
     for shp in sf.iterShapeRecords():
-        geom = json.dumps(shp.shape.__geo_interface__)
-        value = cls(chain((_sub_none_for_empty(v) for v in shp.record), [geom]))
+        value = [_sub_none_for_empty(v) for v in shp.record]
+        value.append(json.dumps(shp.shape.__geo_interface__))
         output.append(value)
     return output
