@@ -62,3 +62,16 @@ def single_file_load(cls, parse_file):
                 cls.populate(connection, year, records)
 
     return load_file_contents
+
+
+def multi_file_load(cls, parse_file):
+    def load_file_contents(connection, filepaths, year, force=False):
+        cls.setup(connection, year, force)
+        for filepath in filepaths:
+            with file_metadata(connection, filepath, cls.group, force) as file_loaded:
+                if not file_loaded or force:
+                    records = parse_file(str(filepath))
+                    print(f'Read {len(records)} records of {cls.group} at {filepath}.')
+                    cls.populate(connection, year, records)
+
+    return load_file_contents

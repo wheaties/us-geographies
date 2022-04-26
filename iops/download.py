@@ -1,9 +1,10 @@
+from itertools import chain
 import os
 import requests
 from pathlib import Path
 
 
-#Assumes that the file name is part of the URL path...
+# Assumes that the file name is part of the URL path...
 class LocalFileDownloader:
     def __init__(self, target_directory=None):
         self.target_directory = target_directory or Path.cwd()
@@ -44,9 +45,23 @@ def download_to_cls(cls, *lookup):
         downloader = LocalFileDownloader(root_folder)
         args = []
         for item in lookup:
-            url = item.get(year)
-            args.append(downloader(url, year, force) if url is not None else None)
+            if callable(item):
+                args.append([downloader(url, year, force) for url in item(year)])
+            else:
+                url = item.get(year)
+                args.append(downloader(url, year, force) if url is not None else None)
 
         return cls(*args)
     return download_files
 
+
+def state_divided_paths():
+    states = chain([1, 2, 4, 5, 6],
+                   range(8, 14),  # 8-13
+                   range(15, 43),  # 15-42
+                   range(44, 52),  # 44-51
+                   [54, 55, 56, 66, 72, 78])
+    for state in states:
+        if state < 10:
+            state = f'0{state}'
+        yield state

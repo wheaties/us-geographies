@@ -19,7 +19,7 @@ def _tract_shape_files(year):
         yield f'https://www2.census.gov/geo/tiger/TIGER{year}/TRACT/tl_{year}_{state}_tract.zip'
 
 
-def download_files(year, root_folder=None):
+def download_files(year, root_folder=None, force=False):
     downloader = LocalFileDownloader(root_folder)
 
-    return [downloader(url, year) for url in _tract_shape_files(year)]
+    return [downloader(url, year, force) for url in _tract_shape_files(year)]

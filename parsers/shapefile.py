@@ -10,10 +10,14 @@ def _sub_none_for_empty(value):
 
 def parse_file(filepath):
     output = []
-    # shapefile.Reader says it can handle os.FileLike but can't do PathLib objects. :(
-    sf = shapefile.Reader(str(filepath))
-    for shp in sf.iterShapeRecords():
-        value = [_sub_none_for_empty(v) for v in shp.record]
-        value.append(json.dumps(shp.shape.__geo_interface__))
-        output.append(value)
+    try:
+        # shapefile.Reader says it can handle os.FileLike but can't do PathLib objects. :(
+        sf = shapefile.Reader(str(filepath))
+        # raise Exception(sf.fields)
+        for shp in sf.iterShapeRecords():
+            value = [_sub_none_for_empty(v) for v in shp.record]
+            value.append(json.dumps(shp.shape.__geo_interface__))
+            output.append(value)
+    except shapefile.ShapefileException as ex:
+        print(f'shapefile {filepath} error: {ex}')
     return output

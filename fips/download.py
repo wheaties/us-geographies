@@ -1,5 +1,5 @@
 from collections import namedtuple
-from iops.download import download_to_cls
+from iops.download import download_to_cls, state_divided_paths
 
 
 gnis_url = {
@@ -58,15 +58,44 @@ _fips_county_shapes = {
     2021: 'https://www2.census.gov/geo/tiger/TIGER2021/COUNTY/tl_2021_us_county.zip'
 }
 
-#holy smokes, shape files...
-#https://www2.census.gov/geo/tiger/GENZ2020/shp/
-#how to read the name of the shapefile: https://www.census.gov/programs-surveys/geography/technical-documentation/naming-convention/cartographic-boundary-file.html
+
+def _fips_county_sub(year):
+    if year < 2011:
+        yield []  # more complicated, see https://www2.census.gov/geo/tiger/TIGER2010/COUSUB/2010/
+
+    for state in state_divided_paths():
+        yield f'https://www2.census.gov/geo/tiger/TIGER{year}/COUSUB/tl_{year}_{state}_cousub.zip'
+
+
+def _fips_place(year):
+    if year < 2011:
+        yield []
+
+    for state in state_divided_paths():
+        yield f'https://www2.census.gov/geo/tiger/TIGER{year}/PLACE/tl_{year}_{state}_place.zip'
+
+
+def _fips_city(year):
+    if year < 2011:
+        yield []
+
+    for state in ['09', 13, 18, 20, 21, 30, 47]:
+        yield f'https://www2.census.gov/geo/tiger/TIGER{year}/CONCITY/tl_{year}_{state}_concity.zip'
 
 
 FIPSFiles = namedtuple('FIPSFiles',
-                       ['state_geocodes', 'state_shapes', 'all_geocodes', 'county_shapes'])
+                       ['state_geocodes',
+                        'state_shapes',
+                        'all_geocodes',
+                        'county_shapes',
+                        'county_subdiv_shapes',
+                        'place_shapes',
+                        'city_shapes'])
 download_files = download_to_cls(FIPSFiles,
                                  _fips_state,
                                  _fips_state_shapes,
                                  _fips_all,
-                                 _fips_county_shapes)
+                                 _fips_county_shapes,
+                                 _fips_county_sub,
+                                 _fips_place,
+                                 _fips_city)
