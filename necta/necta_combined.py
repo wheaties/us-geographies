@@ -1,5 +1,6 @@
+from functools import partial
 from iops.database import RawDataTable
-from metadata.methods import file_metadata
+from metadata.methods import single_file_load
 from parsers.xls import parse_file
 
 
@@ -17,9 +18,5 @@ necta_combined.columns =['necta_code TEXT NOT NULL',
                          'fips_county_subdivision_code TEXT']
 
 
-def load_raw_necta_combined(connection, filepath, year, force=False):
-    with file_metadata(connection, filepath, necta_combined.group, force) as file_loaded:
-        if not file_loaded or force:
-            rows = parse_file(str(filepath), 2, 4)
-            print(f'Read {len(rows)} records from necta at {filepath}.')
-            necta_combined.populate(connection, year, rows)
+load_raw_necta_combined = single_file_load(necta_combined,
+                                           partial(parse_file, skip_beginning=2, skip_ending=4))

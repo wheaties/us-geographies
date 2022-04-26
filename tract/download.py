@@ -1,5 +1,4 @@
-from itertools import chain
-from iops.download import LocalFileDownloader
+from iops.download import LocalFileDownloader, state_divided_paths
 
 
 def _tract_shape_files(year):
@@ -8,14 +7,7 @@ def _tract_shape_files(year):
     elif year == 2010:
         return ['https://www2.census.gov/geo/tiger/TIGER2010/TRACT/2010/tl_2010_01_tract10.zip']
 
-    states = chain([1, 2, 4, 5, 6],
-                   range(8, 14),  # 8-13
-                   range(15, 43),  # 15-42
-                   range(44, 52),  # 44-51
-                   [54, 55, 56, 66, 72, 78])
-    for state in states:
-        if state < 10:
-            state = f'0{state}'
+    for state in state_divided_paths():
         yield f'https://www2.census.gov/geo/tiger/TIGER{year}/TRACT/tl_{year}_{state}_tract.zip'
 
 

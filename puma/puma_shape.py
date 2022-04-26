@@ -1,5 +1,5 @@
 from iops.database import ShapeDataTable
-from metadata.methods import file_metadata
+from metadata.methods import single_file_load
 from parsers.shapefile import parse_file
 
 
@@ -15,10 +15,4 @@ puma_shapes.columns = ['statefp TEXT NOT NULL',
                        'intptlat TEXT NOT NULL',
                        'intptlon TEXT NOT NULL']
 
-
-def load_puma_shapefile(connection, filepath, year, force=False):
-    with file_metadata(connection, filepath, 'PUMA', force) as file_loaded:
-        if not file_loaded or force:
-            records = parse_file(str(filepath))
-            print(f'Read {len(records)} records from puma shapefile at {filepath}.')
-            puma_shapes.populate(connection, year, records)
+load_puma_shapefile = single_file_load(puma_shapes, parse_file)

@@ -1,5 +1,5 @@
 from iops.database import ShapeDataTable
-from metadata.methods import file_metadata
+from metadata.methods import single_file_load
 from parsers.shapefile import parse_file
 
 
@@ -15,10 +15,4 @@ csa_shapes.columns = ['csafp TEXT',
                       'intptlat TEXT',
                       'intptlon TEXT']
 
-
-def load_csa_shapefile(connection, filepath, year, force=False):
-    with file_metadata(connection, filepath, csa_shapes.group, force) as file_loaded:
-        if not file_loaded or force:
-            records = parse_file(str(filepath))
-            print(f'Read {len(records)} records from csa shapefile.')
-            csa_shapes.populate(connection, year, records)
+load_csa_shapefile = single_file_load(csa_shapes, parse_file)

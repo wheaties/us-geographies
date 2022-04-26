@@ -1,5 +1,5 @@
 from iops.database import ShapeDataTable
-from metadata.methods import file_metadata
+from metadata.methods import single_file_load
 from parsers.shapefile import parse_file
 
 
@@ -17,10 +17,4 @@ cd_shapes.columns = ['statefp TEXT NOT NULL',
                      'INTPTLAT TEXT NOT NULL',
                      'INTPTLON TEXT NOT NULL']
 
-
-def load_cd_shapefile(connection, filepath, year, force=False):
-    with file_metadata(connection, filepath, 'CD', force) as file_loaded:
-        if not file_loaded or force:
-            records = parse_file(str(filepath))
-            print(f'Read {len(records)} records from cd shapefile at {filepath}.')
-            cd_shapes.populate(connection, year, records)
+load_cd_shapefile = single_file_load(cd_shapes, parse_file)

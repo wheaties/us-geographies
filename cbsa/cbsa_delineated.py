@@ -1,5 +1,6 @@
+from functools import partial
 from iops.database import RawDataTable
-from metadata.methods import file_metadata
+from metadata.methods import single_file_load
 from parsers.xls import parse_file
 
 
@@ -17,10 +18,5 @@ cbsa_table.columns = ['cbsa_code TEXT NOT NULL',
                       'fips_county_code TEXT NOT NULL',
                       'central_outlying TEXT NOT NULL']
 
-
-def load_raw_cbsa(connection, filepath, year, force=False):
-    with file_metadata(connection, filepath, cbsa_table.group, force) as file_loaded:
-        if not file_loaded or force:
-            rows = parse_file(str(filepath), 2, 4)
-            print(f'Read {len(rows)} records from cbsa at {filepath}.')
-            cbsa_table.populate(connection, year, rows)
+load_raw_cbsa = single_file_load(cbsa_table,
+                                 partial(parse_file, skip_beginning=2, skip_ending=4))
