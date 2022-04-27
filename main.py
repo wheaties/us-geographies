@@ -63,7 +63,7 @@ if __name__ == '__main__':
     with connect_db() as db:
         #run_cbsa(db, 2020, force=True)
         #run_fips(db, 2020)#, force=True)
-        #run_necta(db, 2020, force=True)
+        run_necta(db, 2020)#, force=True)
         #run_puma(db, 2020, force=True)
         #run_cd(db, 2021, force=True)
         #run_tract(db, 2020, force=True)
