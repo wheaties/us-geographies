@@ -24,8 +24,6 @@ from tract.commands import run_tract
 #  b. FUNCSTAT (https://www.census.gov/library/reference/code-lists/functional-status-codes.html)
 #  c. CLASSFP (https://www.census.gov/library/reference/code-lists/class-codes.html)
 
-# notes: more than just FIPS? https://www.census.gov/programs-surveys/geography/guidance/geo-identifiers.html
-# see: https://www.census.gov/library/reference/code-lists/ansi.html
 # see: https://www.nber.org/research/data/ssa-federal-information-processing-series-fips-state-and-county-crosswalk
 # see: https://www.usgs.gov/u.s.-board-on-geographic-names/download-gnis-data
 # see: https://www.huduser.gov/portal/datasets/usps_crosswalk.html

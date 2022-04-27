@@ -54,6 +54,9 @@ def record_file(connection, filepath, dataset, md5):
 
 def single_file_load(cls, parse_file):
     def load_file_contents(connection, filepath, year, force=False):
+        if filepath is None:
+            return
+
         cls.setup(connection, year, force)
         with file_metadata(connection, filepath, cls.group, force) as file_loaded:
             if not file_loaded or force:
@@ -66,8 +69,13 @@ def single_file_load(cls, parse_file):
 
 def multi_file_load(cls, parse_file):
     def load_file_contents(connection, filepaths, year, force=False):
+        if any(filepaths):
+            return
+
         cls.setup(connection, year, force)
         for filepath in filepaths:
+            if filepath is None:
+                continue
             with file_metadata(connection, filepath, cls.group, force) as file_loaded:
                 if not file_loaded or force:
                     records = parse_file(str(filepath))
