@@ -1,4 +1,6 @@
 import json
+import zipfile
+
 import shapefile
 
 
@@ -18,6 +20,6 @@ def parse_file(filepath):
             value = [_sub_none_for_empty(v) for v in shp.record]
             value.append(json.dumps(shp.shape.__geo_interface__))
             output.append(value)
-    except shapefile.ShapefileException as ex:
+    except (shapefile.ShapefileException, zipfile.BadZipfile) as ex:
         print(f'shapefile {filepath} error: {ex}')
     return output

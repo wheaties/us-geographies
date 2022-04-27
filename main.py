@@ -3,6 +3,7 @@ from fips.commands import run_fips
 from necta.commands import run_necta
 from puma.commands import run_puma
 from cd.commands import run_cd
+from sld.commands import run_sld
 from tract.commands import run_tract
 
 #Goals:
@@ -27,13 +28,14 @@ from tract.commands import run_tract
 # see: https://www.census.gov/library/reference/code-lists/ansi.html
 # see: https://www.nber.org/research/data/ssa-federal-information-processing-series-fips-state-and-county-crosswalk
 # see: https://www.usgs.gov/u.s.-board-on-geographic-names/download-gnis-data
-# see: https://www.census.gov/programs-surveys/popest/geographies/reference-files.html
 # see: https://www.huduser.gov/portal/datasets/usps_crosswalk.html
 # see: https://postalpro.usps.com/address-quality/city-state-product
 # see: https://www.census.gov/programs-surveys/geography/guidance/geo-areas/state-legis-dist.html
 # see: https://www.census.gov/newsroom/blogs/random-samplings/2011/07/what-are-census-blocks.html
 # see: https://www2.census.gov/geo/docs/maps-data/data/rel/
 # see: https://nces.ed.gov/programs/edge/Geographic/LocaleBoundaries
+# see: https://nces.ed.gov/programs/edge/Geographic/DistrictBoundaries
+#      https://nces.ed.gov/programs/edge/data/EDGESCHOOLDISTRICT_TL21_SY2021.zip
 
 #see: https://stackoverflow.com/questions/32812463/setting-schema-for-all-queries-of-a-connection-in-psycopg2-getting-race-conditi
 import psycopg2
@@ -63,9 +65,10 @@ if __name__ == '__main__':
     with connect_db() as db:
         #run_cbsa(db, 2020, force=True)
         #run_fips(db, 2020)#, force=True)
-        run_necta(db, 2020)#, force=True)
+        #run_necta(db, 2020)#, force=True)
         #run_puma(db, 2020, force=True)
         #run_cd(db, 2021, force=True)
         #run_tract(db, 2020, force=True)
+        run_sld(db, 2020)
         pass
     print('yo')
