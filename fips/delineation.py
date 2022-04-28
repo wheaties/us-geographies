@@ -20,3 +20,14 @@ def _parse_both(filepath):
 
 
 load_raw_fips_stategeocodes = single_file_load(fips_stategeocodes, _parse_both)
+
+fips_allgeocodes = RawDataTable('fips_allgeocodes')
+fips_allgeocodes.columns = ['summary_level TEXT NOT NULL',
+                            'state_code TEXT NOT NULL',
+                            'county_code TEXT NOT NULL',
+                            'count_subdivision_code TEXT NOT NULL',
+                            'place_code TEXT NOT NULL',
+                            'consolidated_city_code TEXT NOT NULL',
+                            'area_name TEXT NOT NULL']
+
+load_raw_fips_allgeocodes = single_file_load(fips_allgeocodes, _parse_both)

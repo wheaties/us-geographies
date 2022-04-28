@@ -1,12 +1,4 @@
-from cbsa.commands import run_cbsa
-from fips.commands import run_fips
-from necta.commands import run_necta
-from puma.commands import run_puma
-from cd.commands import run_cd
-from sld.commands import run_sld
-from tract.commands import run_tract
-
-#Goals:
+# Goals:
 # 1. to be able to download different US shapefile datasets
 #  d. (optional) ZCTA
 #  e. (optional) RUCA (https://www.ers.usda.gov/webdocs/DataFiles/53241/ruca2010revised.xlsx?v=9111.7d)
@@ -57,16 +49,72 @@ def gen_cbsa_view():
     #see: https://www.federalregister.gov/documents/2021/07/16/2021-15159/2020-standards-for-delineating-core-based-statistical-areas
     pass
 
+# how I want it to look
+# us-geo fetch fips --shape
+# us-geo fetch fips
+# us-geo fetch --dest='
+# us-geo load fips --src=''
+# us-geo load fips
+# us-geo load fips --db=''
 
+import click
+from cbsa.commands import register_cbsa
+from cd.commands import register_cd
+from fips.commands import register_fips
+from necta.commands import register_necta
+from puma.commands import register_puma
+from sld.commands import register_sld
+from tract.commands import register_tract
+
+
+class Registry:
+    def __init__(self):
+        self.get = {}
+        self.load = {}
+
+
+registry = Registry()
+register_cbsa(registry)
+register_cd(registry)
+register_fips(registry)
+register_necta(registry)
+register_puma(registry)
+register_sld(registry)
+register_tract(registry)
+
+
+@click.command()
+@click.option('--path', type=click.Path(), default=None, help='target location to write file(s)')
+@click.option('--force', is_flag=True, help='download and overwrite existing file(s)')
+@click.argument('dataset', type=click.types.Choice(registry.get.keys(), False), nargs=-1)
+@click.argument('year', type=click.types.INT, nargs=1)
+def get(dataset, year, path, force):
+    for ds in dataset:
+        click.echo(f'Fetching {ds} for {year}.')
+        registry.get[ds](year, path, force)
+
+
+@click.command()
+@click.option('--path', type=click.Path(), default=None, help='target location to write file(s)')
+@click.option('--force', is_flag=True, help='overwrite existing db tables')
+@click.argument('dataset', type=click.types.Choice(registry.load.keys(), False), nargs=-1)
+@click.argument('year', type=click.types.INT, nargs=1)
+def load(dataset, year, path, force):
+    for ds in dataset:
+        click.echo(f'Reading or obtaining {ds} files for {year}.')
+        # if you want to force getting files, force at the 'get' command
+        result = registry.get[ds](year, path)
+        click.echo(f'Loading {ds} files into db for {year}.')
+        with connect_db() as db:
+            registry.load[ds](db, result, year, force)
+
+
+@click.group()
+def cli():
+    pass
+
+
+cli.add_command(get)
+cli.add_command(load)
 if __name__ == '__main__':
-    print('Hello World')
-    with connect_db() as db:
-        #run_cbsa(db, 2020, force=True)
-        #run_fips(db, 2020)#, force=True)
-        #run_necta(db, 2020)#, force=True)
-        #run_puma(db, 2020, force=True)
-        #run_cd(db, 2021, force=True)
-        #run_tract(db, 2020, force=True)
-        run_sld(db, 2020)
-        pass
-    print('yo')
+    cli()

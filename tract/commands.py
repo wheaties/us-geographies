@@ -1,9 +1,15 @@
-from tract.tract_shape import load_tract_shapefile
+from tract.shapes import load_tract_shapefile
 from tract.download import download_files
 
 
-def run_tract(connection, year, root_folder=None, force=False):
-    files = download_files(year, root_folder)
+GROUP = 'tract'
 
+
+def load_files(connection, files, year, force=False):
     for sf in files:
         load_tract_shapefile(connection, sf, year, force)
+
+
+def register_tract(registry):
+    registry.get[GROUP] = download_files
+    registry.load[GROUP] = load_files

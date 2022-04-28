@@ -1,6 +1,6 @@
 from iops.download import LocalFileDownloader
 
-_cd_shapefiles ={
+_cd_shapefiles = {
     2012: 'https://www2.census.gov/geo/tiger/TIGER2012/CD/tl_2012_us_cd112.zip',
     2013: 'https://www2.census.gov/geo/tiger/TIGER2013/CD/tl_2013_us_cd113.zip',
     2014: 'https://www2.census.gov/geo/tiger/TIGER2014/CD/tl_2014_us_cd114.zip',
@@ -14,8 +14,8 @@ _cd_shapefiles ={
 }
 
 
-def download_files(year, root_folder=None):
+def download_files(year, root_folder=None, force=False):
     downloader = LocalFileDownloader(root_folder)
     url = _cd_shapefiles.get(year)
 
-    return downloader(url, year) if url is not None else None
+    return downloader(url, year, force) if url is not None else None
