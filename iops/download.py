@@ -44,15 +44,24 @@ def download_to_cls(cls, *lookup):
     def download_files(year, root_folder=None, force=False):
         downloader = LocalFileDownloader(root_folder)
         args = []
-        for item in lookup:
-            if callable(item):
-                args.append([downloader(url, year, force) for url in item(year)])
+        for fn in lookup:
+            result = fn(year)
+            if isinstance(result, str):
+                args.append(downloader(result, year, force) if result is not None else None)
             else:
-                url = item.get(year)
-                args.append(downloader(url, year, force) if url is not None else None)
+                args.append([downloader(url, year, force) for url in result])
 
         return cls(*args)
     return download_files
+
+
+def download_to_file(lookup):
+    def download_file(year, root_folder=None, force=False):
+        downloader = LocalFileDownloader(root_folder)
+        url = lookup(year)
+
+        return downloader(url, year, force) if url is not None else None
+    return download_file
 
 
 def state_divided_paths():

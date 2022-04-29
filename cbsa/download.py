@@ -3,35 +3,37 @@ from iops.download import download_to_cls
 
 
 # TODO: issue with 2013!
-_cbsa_delineation_files = {
-    2013: 'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2013/delineation-files/list1.xls',
-    2015: 'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2015/delineation-files/list1.xls',
-    2017: 'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2017/delineation-files/list1.xls',
-    2018: 'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2018/delineation-files/list1_Sep_2018.xls',
-    2020: 'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2020/delineation-files/list1_2020.xls',
-}
+def _cbsa_delineation_files(year):
+    if year == 2018:
+        return 'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2018/delineation-files/list1_Sep_2018.xls'
+    return f'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/{year}/delineation-files/list1.xls'
 
-_cbsa_shapefiles = {
-    2013: 'https://www2.census.gov/geo/tiger/TIGER2013/CBSA/tl_2013_us_cbsa.zip',
-    2015: 'https://www2.census.gov/geo/tiger/TIGER2015/CBSA/tl_2015_us_cbsa.zip',
-    2017: 'https://www2.census.gov/geo/tiger/TIGER2017/CBSA/tl_2017_us_cbsa.zip',
-    2018: 'https://www2.census.gov/geo/tiger/TIGER2018/CBSA/tl_2018_us_cbsa.zip',
-    2019: 'https://www2.census.gov/geo/tiger/TIGER2019/CBSA/tl_2019_us_cbsa.zip',
-    2020: 'https://www2.census.gov/geo/tiger/TIGER2020/CBSA/tl_2020_us_cbsa.zip'
-}
 
-_metdiv_shapefiles ={
-    2020: 'https://www2.census.gov/geo/tiger/TIGER2020/METDIV/tl_2020_us_metdiv.zip'
-}
+def _cbsa_shapefiles(year):
+    if year < 2010:
+        return None
+    elif year == 2010:
+        return 'https://www2.census.gov/geo/tiger/TIGER2010/CBSA/2010/tl_2010_us_cbsa10.zip'
+    else:
+        return f'https://www2.census.gov/geo/tiger/TIGER{year}/CBSA/tl_{year}_us_cbsa.zip'
 
-_csa_shapefiles = {
-    2013: 'https://www2.census.gov/geo/tiger/TIGER2013/CSA/tl_2013_us_csa.zip',
-    2015: 'https://www2.census.gov/geo/tiger/TIGER2015/CSA/tl_2015_us_csa.zip',
-    2017: 'https://www2.census.gov/geo/tiger/TIGER2017/CSA/tl_2017_us_csa.zip',
-    2018: 'https://www2.census.gov/geo/tiger/TIGER2018/CSA/tl_2018_us_csa.zip',
-    2019: 'https://www2.census.gov/geo/tiger/TIGER2019/CSA/tl_2019_us_csa.zip',
-    2020: 'https://www2.census.gov/geo/tiger/TIGER2020/CSA/tl_2020_us_csa.zip'
-}
+
+def _metdiv_shapefiles(year):
+    if year < 2010:
+        return None
+    elif year == 2010:
+        return 'https://www2.census.gov/geo/tiger/TIGER2010/METDIV/2010/tl_2010_us_metdiv10.zip'
+    else:
+        return f'https://www2.census.gov/geo/tiger/TIGER{year}/METDIV/tl_{year}_us_metdiv.zip'
+
+
+def _csa_shapefiles(year):
+    if year < 2010:
+        return None
+    elif year == 2010:
+        return 'https://www2.census.gov/geo/tiger/TIGER2010/CSA/2010/tl_2010_us_csa10.zip'
+    else:
+        return f'https://www2.census.gov/geo/tiger/TIGER{year}/CSA/tl_{year}_us_csa.zip'
 
 
 CBSAFiles = namedtuple('CBSAFiles',

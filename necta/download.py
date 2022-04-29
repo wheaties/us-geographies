@@ -3,41 +3,49 @@ from iops.download import download_to_cls
 
 
 # index out of range for 2013, header/footer offset different?
-_necta_combined_files = {
-    2013: 'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2013/delineation-files/list3.xls',
-    2015: 'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2015/delineation-files/list3.xls',
-    2017: 'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2017/delineation-files/list3.xls',
-    2018: 'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2018/delineation-files/list3_Sep_2018.xls',
-    2020: 'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2020/delineation-files/list3_2020.xls'
-}
+def _necta_combined_files(year):
+    if year in (2013, 2015, 2017):
+        return f'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/{year}/delineation-files/list3.xls'
+    elif year == 2018:
+        return 'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2018/delineation-files/list3_Sep_2018.xls',
+    else:
+        return f'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/{year}/delineation-files/list3_{year}.xls'
 
-_necta_cities_files = {
-    2013: 'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2013/delineation-files/list4.xls',
-    2015: 'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2015/delineation-files/list4.xls',
-    2017: 'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2017/delineation-files/list4.xls',
-    2018: 'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2018/delineation-files/list4_Sep_2018.xls',
-    2020: 'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2020/delineation-files/list4_2020.xls'
-}
 
-_necta_combined_shapefiles = {
-    2013: 'https://www2.census.gov/geo/tiger/TIGER2013/CNECTA/tl_2013_us_cnecta.zip',
-    2014: 'https://www2.census.gov/geo/tiger/TIGER2014/CNECTA/tl_2014_us_cnecta.zip',
-    2015: 'https://www2.census.gov/geo/tiger/TIGER2015/CNECTA/tl_2015_us_cnecta.zip',
-    2016: 'https://www2.census.gov/geo/tiger/TIGER2016/CNECTA/tl_2016_us_cnecta.zip',
-    2017: 'https://www2.census.gov/geo/tiger/TIGER2017/CNECTA/tl_2017_us_cnecta.zip',
-    2018: 'https://www2.census.gov/geo/tiger/TIGER2018/CNECTA/tl_2018_us_cnecta.zip',
-    2019: 'https://www2.census.gov/geo/tiger/TIGER2019/CNECTA/tl_2019_us_cnecta.zip',
-    2020: 'https://www2.census.gov/geo/tiger/TIGER2020/CNECTA/tl_2020_us_cnecta.zip',
-    2021: 'https://www2.census.gov/geo/tiger/TIGER2021/CNECTA/tl_2021_us_cnecta.zip'
-}
+def _necta_cities_files(year):
+    if year in (2013, 2015, 2017):
+        return f'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/{year}/delineation-files/list4.xls'
+    elif year == 2018:
+        return 'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2018/delineation-files/list4_Sep_2018.xls',
+    else:
+        return f'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/{year}/delineation-files/list4_{year}.xls'
 
-_necta_division_shapefiles = {
-    2020: 'https://www2.census.gov/geo/tiger/TIGER2020/NECTADIV/tl_2020_us_nectadiv.zip'
-}
 
-_necta_shapefiles = {
-    2020: 'https://www2.census.gov/geo/tiger/TIGER2020/NECTA/tl_2020_us_necta.zip'
-}
+def _necta_combined_shapefiles(year):
+    if year < 2010:
+        return None
+    elif year == 2010:
+        return 'https://www2.census.gov/geo/tiger/TIGER2010/CNECTA/2010/tl_2010_us_cnecta10.zip'
+    else:
+        return f'https://www2.census.gov/geo/tiger/TIGER{year}/CNECTA/tl_{year}_us_cnecta.zip'
+
+
+def _necta_division_shapefiles(year):
+    if year < 2010:
+        return None
+    elif year == 2010:
+        return 'https://www2.census.gov/geo/tiger/TIGER2010/NECTADIV/2010/tl_2010_us_nectadiv10.zip'
+    else:
+        return f'https://www2.census.gov/geo/tiger/TIGER{year}/NECTADIV/tl_{year}_us_nectadiv.zip'
+
+
+def _necta_shapefiles(year):
+    if year < 2010:
+        return None
+    elif year == 2010:
+        return 'https://www2.census.gov/geo/tiger/TIGER2010/NECTA/2010/tl_2010_us_necta10.zip'
+    else:
+        return f'https://www2.census.gov/geo/tiger/TIGER{year}/NECTA/tl_{year}_us_necta.zip'
 
 
 NECTAFiles = namedtuple('NECTAFiles',
