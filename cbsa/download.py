@@ -20,6 +20,10 @@ _cbsa_shapefiles = {
     2020: 'https://www2.census.gov/geo/tiger/TIGER2020/CBSA/tl_2020_us_cbsa.zip'
 }
 
+_metdiv_shapefiles ={
+    2020: 'https://www2.census.gov/geo/tiger/TIGER2020/METDIV/tl_2020_us_metdiv.zip'
+}
+
 _csa_shapefiles = {
     2013: 'https://www2.census.gov/geo/tiger/TIGER2013/CSA/tl_2013_us_csa.zip',
     2015: 'https://www2.census.gov/geo/tiger/TIGER2015/CSA/tl_2015_us_csa.zip',
@@ -30,5 +34,10 @@ _csa_shapefiles = {
 }
 
 
-CBSAFiles = namedtuple('CBSAFiles', ['cbsa_delineation', 'cbsa_shape', 'csa_shape'])
-download_files = download_to_cls(CBSAFiles, _cbsa_delineation_files, _cbsa_shapefiles, _csa_shapefiles)
+CBSAFiles = namedtuple('CBSAFiles',
+                       ['cbsa_delineation', 'cbsa_shape', 'metdiv_shape', 'csa_shape'])
+download_files = download_to_cls(CBSAFiles,
+                                 _cbsa_delineation_files,
+                                 _cbsa_shapefiles,
+                                 _metdiv_shapefiles,
+                                 _csa_shapefiles)
