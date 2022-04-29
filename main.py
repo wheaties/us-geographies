@@ -1,3 +1,12 @@
+import click
+from cbsa.commands import register_cbsa
+from cd.commands import register_cd
+from fips.commands import register_fips
+from iops.database import connect_db
+from necta.commands import register_necta
+from puma.commands import register_puma
+from sld.commands import register_sld
+from tract.commands import register_tract
 # Goals:
 # 1. to be able to download different US shapefile datasets
 #  d. (optional) ZCTA
@@ -6,7 +15,7 @@
 #  g. GNIS (plus FIPS crosswalk)
 #  h. LZPS (is this the zip codes? Think it's city state product)
 #  i. see: https://www.census.gov/programs-surveys/geography/technical-documentation/records-layout/nlt-record-layouts.html
-# 2. FIPS shapefiles, gotta figure out which ones are actually important
+# 2. CBSA, does it need METDIV?
 # 3. to be able to load different US datasets into a DB
 #  a. first as 'raw'
 #  b. then as 'cleaned up'
@@ -27,13 +36,6 @@
 # see: https://nces.ed.gov/programs/edge/Geographic/DistrictBoundaries
 #      https://nces.ed.gov/programs/edge/data/EDGESCHOOLDISTRICT_TL21_SY2021.zip
 
-#see: https://stackoverflow.com/questions/32812463/setting-schema-for-all-queries-of-a-connection-in-psycopg2-getting-race-conditi
-import psycopg2
-def connect_db(schema=None):
-    conn = psycopg2.connect('postgresql://postgres:admin@localhost:5432')
-    with conn.cursor() as cursor:
-        cursor.execute('SELECT 1')
-    return conn
 
 #notes on CBSA
 # 1. made of entire counties
@@ -48,23 +50,6 @@ def gen_cbsa_view():
     #csa doesn't use them
     #see: https://www.federalregister.gov/documents/2021/07/16/2021-15159/2020-standards-for-delineating-core-based-statistical-areas
     pass
-
-# how I want it to look
-# us-geo fetch fips --shape
-# us-geo fetch fips
-# us-geo fetch --dest='
-# us-geo load fips --src=''
-# us-geo load fips
-# us-geo load fips --db=''
-
-import click
-from cbsa.commands import register_cbsa
-from cd.commands import register_cd
-from fips.commands import register_fips
-from necta.commands import register_necta
-from puma.commands import register_puma
-from sld.commands import register_sld
-from tract.commands import register_tract
 
 
 class Registry:
@@ -95,17 +80,22 @@ def get(dataset, year, path, force):
 
 
 @click.command()
-@click.option('--path', type=click.Path(), default=None, help='target location to write file(s)')
-@click.option('--force', is_flag=True, help='overwrite existing db tables')
+@click.option('--path', type=click.Path(), default=None, help='target location to write file(s).')
+@click.option('--force', is_flag=True, help='overwrite existing db tables.')
+@click.option('--dbname', default=None, help='db name, can be a connection string.')
+@click.option('--dbhost', default=None, help='db host, will be overridden if contained in dbname param.')
+@click.option('--dbport', default=5432, type=click.INT, help='db port, will be overridden if contained in dbname param.')
+@click.option('--dbuser', default=None, help='db user, will be overridden if contained in dbname param.')
+@click.option('--dbpass', default=None, help='db password, will be overridden if contained in dbname param.')
 @click.argument('dataset', type=click.types.Choice(registry.load.keys(), False), nargs=-1)
 @click.argument('year', type=click.types.INT, nargs=1)
-def load(dataset, year, path, force):
+def load(dataset, year, path, force, dbname, dbhost, dbport, dbuser, dbpass):
     for ds in dataset:
         click.echo(f'Reading or obtaining {ds} files for {year}.')
         # if you want to force getting files, force at the 'get' command
         result = registry.get[ds](year, path)
         click.echo(f'Loading {ds} files into db for {year}.')
-        with connect_db() as db:
+        with connect_db(dbname, dbhost, dbport, dbuser, dbpass) as db:
             registry.load[ds](db, result, year, force)
 
 
