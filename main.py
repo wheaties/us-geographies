@@ -7,6 +7,7 @@ from necta.commands import register_necta
 from puma.commands import register_puma
 from sld.commands import register_sld
 from tract.commands import register_tract
+from zcta.commands import register_zcta
 # Goals:
 # 1. to be able to download different US shapefile datasets
 #  d. (optional) ZCTA
@@ -66,6 +67,7 @@ register_necta(registry)
 register_puma(registry)
 register_sld(registry)
 register_tract(registry)
+register_zcta(registry)
 
 
 @click.command()
