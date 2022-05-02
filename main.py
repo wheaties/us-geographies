@@ -1,5 +1,5 @@
 import click
-from cbsa.commands import register_cbsa
+from metro.commands import register_metro
 from cd.commands import register_cd
 from fips.commands import register_fips
 from iops.database import connect_db
@@ -46,7 +46,7 @@ def gen_cbsa_view():
 	#FROM cbsa_2020_raw
 	#WHERE csa_code IS NOT NULL
 
-    #cbsa use the micro metro stuff when relating to FIPS counties
+    #metro use the micro metro stuff when relating to FIPS counties
     #csa doesn't use them
     #see: https://www.federalregister.gov/documents/2021/07/16/2021-15159/2020-standards-for-delineating-core-based-statistical-areas
     pass
@@ -59,9 +59,9 @@ class Registry:
 
 
 registry = Registry()
-register_cbsa(registry)
 register_cd(registry)
 register_fips(registry)
+register_metro(registry)
 register_necta(registry)
 register_puma(registry)
 register_sld(registry)

@@ -3,7 +3,7 @@ from metadata.methods import single_file_load
 from parsers.shapefile import parse_file
 
 
-cbsa_shapes = ShapeDataTable('cbsa')
+cbsa_shapes = ShapeDataTable('metro')
 cbsa_shapes.columns = ['csafp TEXT',
                        'cbsafp TEXT',
                        'geoid TEXT',
@@ -19,7 +19,7 @@ cbsa_shapes.columns = ['csafp TEXT',
 
 load_cbsa_shapefile = single_file_load(cbsa_shapes, parse_file)
 
-metdiv_shapes = ShapeDataTable('metdiv', 'cbsa')
+metdiv_shapes = ShapeDataTable('metdiv', 'metro')
 metdiv_shapes.columns = ['csafp TEXT',
                          'cbsafp TEXT NOT NULL',
                          'metdivfp TEXT NOT NULL',
@@ -35,7 +35,7 @@ metdiv_shapes.columns = ['csafp TEXT',
 
 load_metdiv_shapefile = single_file_load(metdiv_shapes, parse_file)
 
-csa_shapes = ShapeDataTable('csa', 'cbsa')
+csa_shapes = ShapeDataTable('csa', 'metro')
 csa_shapes.columns = ['csafp TEXT NOT NULL',
                       'geoid TEXT NOT NULL',
                       'name TEXT NOT NULL',
