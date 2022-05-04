@@ -5,19 +5,18 @@ from fips.commands import register_fips
 from iops.database import connect_db
 from metro.commands import register_metro
 from necta.commands import register_necta
+from place.commands import register_place
 from puma.commands import register_puma
 from sld.commands import register_sld
 from tract.commands import register_tract
 from zcta.commands import register_zcta
 # Goals:
 # 1. to be able to download different US shapefile datasets
-#  d. (optional) ZCTA
 #  e. (optional) RUCA (https://www.ers.usda.gov/webdocs/DataFiles/53241/ruca2010revised.xlsx?v=9111.7d)
 #  f. (optional) any more from https://www2.census.gov/geo/tiger/
 #  g. GNIS (plus FIPS crosswalk)
 #  h. LZPS (is this the zip codes? Think it's city state product)
 #  i. see: https://www.census.gov/programs-surveys/geography/technical-documentation/records-layout/nlt-record-layouts.html
-# 2. CBSA, does it need METDIV?
 # 3. to be able to load different US datasets into a DB
 #  a. first as 'raw'
 #  b. then as 'cleaned up'
@@ -26,7 +25,10 @@ from zcta.commands import register_zcta
 #  a. MTFCC (https://www.census.gov/library/reference/code-lists/mt-feature-class-codes.html)
 #  b. FUNCSTAT (https://www.census.gov/library/reference/code-lists/functional-status-codes.html)
 #  c. CLASSFP (https://www.census.gov/library/reference/code-lists/class-codes.html)
-
+# 6. crosswalk files
+#  a. https://udsmapper.org/zip-code-to-zcta-crosswalk/
+#  b. https://www.huduser.gov/portal/datasets/usps_crosswalk.html
+#  c. https://www2.census.gov/geo/docs/maps-data/data/rel/
 # see: https://www.nber.org/research/data/ssa-federal-information-processing-series-fips-state-and-county-crosswalk
 # see: https://www.usgs.gov/u.s.-board-on-geographic-names/download-gnis-data
 # see: https://www.huduser.gov/portal/datasets/usps_crosswalk.html
@@ -65,6 +67,7 @@ register_cd(registry)
 register_fips(registry)
 register_metro(registry)
 register_necta(registry)
+register_place(registry)
 register_puma(registry)
 register_sld(registry)
 register_tract(registry)
