@@ -1,4 +1,4 @@
-from iops.download import LocalFileDownloader, state_divided_paths
+from iops.download import download_to_list, state_divided_paths
 
 
 def _tract_shape_files(year):
@@ -11,7 +11,4 @@ def _tract_shape_files(year):
         yield f'https://www2.census.gov/geo/tiger/TIGER{year}/TRACT/tl_{year}_{state}_tract.zip'
 
 
-def download_files(year, root_folder=None, force=False):
-    downloader = LocalFileDownloader(root_folder)
-
-    return [downloader(url, year, force) for url in _tract_shape_files(year)]
+download_files = download_to_list(_tract_shape_files)

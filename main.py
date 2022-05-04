@@ -1,8 +1,9 @@
 import click
-from metro.commands import register_metro
+from bg.commands import register_bg
 from cd.commands import register_cd
 from fips.commands import register_fips
 from iops.database import connect_db
+from metro.commands import register_metro
 from necta.commands import register_necta
 from puma.commands import register_puma
 from sld.commands import register_sld
@@ -30,12 +31,11 @@ from zcta.commands import register_zcta
 # see: https://www.usgs.gov/u.s.-board-on-geographic-names/download-gnis-data
 # see: https://www.huduser.gov/portal/datasets/usps_crosswalk.html
 # see: https://postalpro.usps.com/address-quality/city-state-product
-# see: https://www.census.gov/programs-surveys/geography/guidance/geo-areas/state-legis-dist.html
-# see: https://www.census.gov/newsroom/blogs/random-samplings/2011/07/what-are-census-blocks.html
 # see: https://www2.census.gov/geo/docs/maps-data/data/rel/
 # see: https://nces.ed.gov/programs/edge/Geographic/LocaleBoundaries
 # see: https://nces.ed.gov/programs/edge/Geographic/DistrictBoundaries
 #      https://nces.ed.gov/programs/edge/data/EDGESCHOOLDISTRICT_TL21_SY2021.zip
+# see: https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2019/TGRSHP2019_TechDoc.pdf
 
 
 #notes on CBSA
@@ -60,6 +60,7 @@ class Registry:
 
 
 registry = Registry()
+register_bg(registry)
 register_cd(registry)
 register_fips(registry)
 register_metro(registry)

@@ -64,6 +64,14 @@ def download_to_file(lookup):
     return download_file
 
 
+def download_to_list(lookup):
+    def download_files(year, root_folder=None, force=False):
+        downloader = LocalFileDownloader(root_folder)
+
+        return [downloader(url, year, force) for url in lookup(year)]
+    return download_files
+
+
 def state_divided_paths():
     states = chain([1, 2, 4, 5, 6],
                    range(8, 14),  # 8-13
