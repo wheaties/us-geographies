@@ -5,7 +5,6 @@ from fips.commands import register_fips
 from iops.database import connect_db
 from metro.commands import register_metro
 from necta.commands import register_necta
-from place.commands import register_place
 from puma.commands import register_puma
 from sd.commands import register_sd
 from sld.commands import register_sld
@@ -68,7 +67,6 @@ register_cd(registry)
 register_fips(registry)
 register_metro(registry)
 register_necta(registry)
-register_place(registry)
 register_puma(registry)
 register_sd(registry)
 register_sld(registry)
