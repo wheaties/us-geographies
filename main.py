@@ -9,6 +9,7 @@ from puma.commands import register_puma
 from sd.commands import register_sd
 from sld.commands import register_sld
 from tract.commands import register_tract
+from ua.commands import register_ua
 from zcta.commands import register_zcta
 # Goals:
 # 1. to be able to download different US shapefile datasets
@@ -71,6 +72,7 @@ register_puma(registry)
 register_sd(registry)
 register_sld(registry)
 register_tract(registry)
+register_ua(registry)
 register_zcta(registry)
 
 

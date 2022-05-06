@@ -69,7 +69,7 @@ def single_file_load(cls, parse_file):
 
 def multi_file_load(cls, parse_file):
     def load_file_contents(connection, filepaths, year, force=False):
-        if any(filepaths):
+        if not any(filepaths):
             return
 
         cls.setup(connection, year, force)
