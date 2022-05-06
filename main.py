@@ -7,6 +7,7 @@ from metro.commands import register_metro
 from necta.commands import register_necta
 from place.commands import register_place
 from puma.commands import register_puma
+from sd.commands import register_sd
 from sld.commands import register_sld
 from tract.commands import register_tract
 from zcta.commands import register_zcta
@@ -16,7 +17,6 @@ from zcta.commands import register_zcta
 #  f. (optional) any more from https://www2.census.gov/geo/tiger/
 #  g. GNIS (plus FIPS crosswalk)
 #  h. LZPS (is this the zip codes? Think it's city state product)
-#  i. see: https://www.census.gov/programs-surveys/geography/technical-documentation/records-layout/nlt-record-layouts.html
 # 3. to be able to load different US datasets into a DB
 #  a. first as 'raw'
 #  b. then as 'cleaned up'
@@ -54,6 +54,7 @@ def gen_cbsa_view():
     #see: https://www.federalregister.gov/documents/2021/07/16/2021-15159/2020-standards-for-delineating-core-based-statistical-areas
     pass
 
+#https://www2.census.gov/geo/pdfs/reference/mtfccs2021.pdf
 
 class Registry:
     def __init__(self):
@@ -69,6 +70,7 @@ register_metro(registry)
 register_necta(registry)
 register_place(registry)
 register_puma(registry)
+register_sd(registry)
 register_sld(registry)
 register_tract(registry)
 register_zcta(registry)
