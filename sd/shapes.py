@@ -1,5 +1,5 @@
 from iops.database import ShapeDataTable
-from metadata.methods import single_file_load
+from iops.metadata import single_file_load
 from parsers.shapefile import parse_file
 
 

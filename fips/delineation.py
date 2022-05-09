@@ -1,5 +1,5 @@
 from iops.database import RawDataTable
-from metadata.methods import single_file_load
+from iops.metadata import single_file_load
 from parsers.xlsx import parse_file as xlsx_file
 from parsers.xls import parse_file as xls_file
 from openpyxl.utils.exceptions import InvalidFileException

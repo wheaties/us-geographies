@@ -1,6 +1,6 @@
 from functools import partial
 from iops.database import RawDataTable
-from metadata.methods import single_file_load
+from iops.metadata import single_file_load
 from parsers.xls import parse_file
 
 
