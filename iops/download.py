@@ -87,7 +87,7 @@ def state_divided_paths():
 def download_us_tiger_pattern(abbr, cutoff=2011):
     def download_file(year):
         if year == 2010:
-            return f'https://www2.census.gov/geo/tiger/TIGER201/{abbr.upper()}/2010/tl_2010_us_{abbr}10.zip'
+            return f'https://www2.census.gov/geo/tiger/TIGER2010/{abbr.upper()}/2010/tl_2010_us_{abbr}10.zip'
         elif year < cutoff:
             return None
         else:
