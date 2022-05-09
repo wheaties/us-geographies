@@ -13,14 +13,7 @@ from ua.commands import register_ua
 from zcta.commands import register_zcta
 # Goals:
 # 1. to be able to download different US shapefile datasets
-#  e. (optional) RUCA (https://www.ers.usda.gov/webdocs/DataFiles/53241/ruca2010revised.xlsx?v=9111.7d)
 #  f. (optional) any more from https://www2.census.gov/geo/tiger/
-#  g. GNIS (plus FIPS crosswalk)
-#  h. LZPS (is this the zip codes? Think it's city state product)
-# 3. to be able to load different US datasets into a DB
-#  a. first as 'raw'
-#  b. then as 'cleaned up'
-# 4. identify dataset dependencies for the "cleaned up" version
 # 5. supporting datasets to understand the content
 #  a. MTFCC (https://www.census.gov/library/reference/code-lists/mt-feature-class-codes.html)
 #  b. FUNCSTAT (https://www.census.gov/library/reference/code-lists/functional-status-codes.html)
@@ -30,32 +23,17 @@ from zcta.commands import register_zcta
 #  b. https://www.huduser.gov/portal/datasets/usps_crosswalk.html
 #  c. https://www2.census.gov/geo/docs/maps-data/data/rel/
 # see: https://www.nber.org/research/data/ssa-federal-information-processing-series-fips-state-and-county-crosswalk
-# see: https://www.usgs.gov/u.s.-board-on-geographic-names/download-gnis-data
-# see: https://www.huduser.gov/portal/datasets/usps_crosswalk.html
 # see: https://postalpro.usps.com/address-quality/city-state-product
 # see: https://www2.census.gov/geo/docs/maps-data/data/rel/
 # see: https://nces.ed.gov/programs/edge/Geographic/LocaleBoundaries
 # see: https://nces.ed.gov/programs/edge/Geographic/DistrictBoundaries
 #      https://nces.ed.gov/programs/edge/data/EDGESCHOOLDISTRICT_TL21_SY2021.zip
 # see: https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2019/TGRSHP2019_TechDoc.pdf
-
-
-#notes on CBSA
-# 1. made of entire counties
-# 2. uses most columns
-# 3. a CBSA isn't limited to a single state
-def gen_cbsa_view():
-    #SELECT DISTINCT(csa_code), csa_title
-	#FROM cbsa_2020_raw
-	#WHERE csa_code IS NOT NULL
-
-    #metro use the micro metro stuff when relating to FIPS counties
-    #csa doesn't use them
-    #see: https://www.federalregister.gov/documents/2021/07/16/2021-15159/2020-standards-for-delineating-core-based-statistical-areas
-    pass
+# see: https://apps.nationalmap.gov/datasets/
 
 #https://www2.census.gov/geo/pdfs/reference/mtfccs2021.pdf
 
+# TODO: need a way to add command groups such as "all" or "tribal"
 class Registry:
     def __init__(self):
         self.get = {}

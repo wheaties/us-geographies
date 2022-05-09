@@ -1,5 +1,5 @@
 from collections import namedtuple
-from iops.download import download_to_cls
+from iops.download import download_to_cls, download_us_tiger_pattern
 
 
 # index out of range for 2013, header/footer offset different?
@@ -21,32 +21,9 @@ def _necta_cities_files(year):
         return f'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/{year}/delineation-files/list4_{year}.xls'
 
 
-def _necta_combined_shapefiles(year):
-    if year < 2010:
-        return None
-    elif year == 2010:
-        return 'https://www2.census.gov/geo/tiger/TIGER2010/CNECTA/2010/tl_2010_us_cnecta10.zip'
-    else:
-        return f'https://www2.census.gov/geo/tiger/TIGER{year}/CNECTA/tl_{year}_us_cnecta.zip'
-
-
-def _necta_division_shapefiles(year):
-    if year < 2010:
-        return None
-    elif year == 2010:
-        return 'https://www2.census.gov/geo/tiger/TIGER2010/NECTADIV/2010/tl_2010_us_nectadiv10.zip'
-    else:
-        return f'https://www2.census.gov/geo/tiger/TIGER{year}/NECTADIV/tl_{year}_us_nectadiv.zip'
-
-
-def _necta_shapefiles(year):
-    if year < 2010:
-        return None
-    elif year == 2010:
-        return 'https://www2.census.gov/geo/tiger/TIGER2010/NECTA/2010/tl_2010_us_necta10.zip'
-    else:
-        return f'https://www2.census.gov/geo/tiger/TIGER{year}/NECTA/tl_{year}_us_necta.zip'
-
+_necta_combined_shapefiles = download_us_tiger_pattern('cnecta')
+_necta_division_shapefiles = download_us_tiger_pattern('nectadiv')
+_necta_shapefiles = download_us_tiger_pattern('necta')
 
 NECTAFiles = namedtuple('NECTAFiles',
                         ['combined', 'cities', 'combined_shapes', 'division_shapes', 'city_shapes'])

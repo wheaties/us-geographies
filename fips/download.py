@@ -1,5 +1,5 @@
 from collections import namedtuple
-from iops.download import download_to_cls, state_divided_paths
+from iops.download import download_to_cls, state_divided_paths, download_us_tiger_pattern
 
 
 def _fips_state(year):
@@ -17,23 +17,9 @@ def _fips_all(year):
 
 
 # TODO: issue with 2011 files
-def _fips_state_shapes(year):
-    if year < 2010:
-        return None
-    elif year == 2010:
-        return 'https://www2.census.gov/geo/tiger/TIGER2010/STATE/2010/tl_2010_us_state10.zip'
-    else:
-        return f'https://www2.census.gov/geo/tiger/TIGER{year}/STATE/tl_{year}_us_state.zip'
-
-
+_fips_state_shapes = download_us_tiger_pattern('state')
 # TODO: issue with 2012
-def _fips_county_shapes(year):
-    if year < 2010:
-        return None
-    elif year == 2010:
-        return 'https://www2.census.gov/geo/tiger/TIGER2010/COUNTY/2010/tl_2010_us_county10.zip'
-    else:
-        return f'https://www2.census.gov/geo/tiger/TIGER{year}/COUNTY/tl_{year}_us_county.zip'
+_fips_county_shapes = download_us_tiger_pattern('county')
 
 
 def _fips_county_sub(year):

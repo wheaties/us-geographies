@@ -1,5 +1,5 @@
 from collections import namedtuple
-from iops.download import download_to_cls
+from iops.download import download_to_cls, download_us_tiger_pattern
 
 
 # TODO: issue with 2013!
@@ -21,32 +21,9 @@ def _principal_cities_files(year):
         return f'https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/{year}/delineation-files/list2_{year}.xls'
 
 
-def _cbsa_shapefiles(year):
-    if year < 2010:
-        return None
-    elif year == 2010:
-        return 'https://www2.census.gov/geo/tiger/TIGER2010/CBSA/2010/tl_2010_us_cbsa10.zip'
-    else:
-        return f'https://www2.census.gov/geo/tiger/TIGER{year}/CBSA/tl_{year}_us_cbsa.zip'
-
-
-def _metdiv_shapefiles(year):
-    if year < 2010:
-        return None
-    elif year == 2010:
-        return 'https://www2.census.gov/geo/tiger/TIGER2010/METDIV/2010/tl_2010_us_metdiv10.zip'
-    else:
-        return f'https://www2.census.gov/geo/tiger/TIGER{year}/METDIV/tl_{year}_us_metdiv.zip'
-
-
-def _csa_shapefiles(year):
-    if year < 2010:
-        return None
-    elif year == 2010:
-        return 'https://www2.census.gov/geo/tiger/TIGER2010/CSA/2010/tl_2010_us_csa10.zip'
-    else:
-        return f'https://www2.census.gov/geo/tiger/TIGER{year}/CSA/tl_{year}_us_csa.zip'
-
+_cbsa_shapefiles = download_us_tiger_pattern('cbsa')
+_metdiv_shapefiles = download_us_tiger_pattern('metdiv')
+_csa_shapefiles = download_us_tiger_pattern('csa')
 
 CBSAFiles = namedtuple('CBSAFiles',
                        ['cbsa_delineation', 'cities_delineation', 'cbsa_shape', 'metdiv_shape', 'csa_shape'])
