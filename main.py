@@ -13,10 +13,6 @@ from tract.commands import register_tract
 from ua.commands import register_ua
 from zcta.commands import register_zcta
 # Goals:
-# 5. supporting datasets to understand the content
-#  a. MTFCC (https://www.census.gov/library/reference/code-lists/mt-feature-class-codes.html)
-#  b. FUNCSTAT (https://www.census.gov/library/reference/code-lists/functional-status-codes.html)
-#  c. CLASSFP (https://www.census.gov/library/reference/code-lists/class-codes.html)
 # 6. crosswalk files
 #  a. https://udsmapper.org/zip-code-to-zcta-crosswalk/
 #  b. https://www.huduser.gov/portal/datasets/usps_crosswalk.html
