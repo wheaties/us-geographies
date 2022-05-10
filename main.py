@@ -13,8 +13,6 @@ from tract.commands import register_tract
 from ua.commands import register_ua
 from zcta.commands import register_zcta
 # Goals:
-# 1. to be able to download different US shapefile datasets
-#  f. (optional) any more from https://www2.census.gov/geo/tiger/
 # 5. supporting datasets to understand the content
 #  a. MTFCC (https://www.census.gov/library/reference/code-lists/mt-feature-class-codes.html)
 #  b. FUNCSTAT (https://www.census.gov/library/reference/code-lists/functional-status-codes.html)
@@ -34,12 +32,32 @@ from zcta.commands import register_zcta
 
 #https://www2.census.gov/geo/pdfs/reference/mtfccs2021.pdf
 
+#https://nces.ed.gov/programs/edge/data/EDGE_GEOCODE_POSTSECONDARYSCH_2122.zip
+#https://nces.ed.gov/programs/edge/data/EDGE_GEOCODE_PUBLICSCH_2021.zip
 
-# TODO: need a way to add command groups such as "all"
+
 class Registry:
     def __init__(self):
         self.get = {}
         self.load = {}
+        self._register_all()
+
+    def _register_all(self):
+        def get_all(year):
+            output = {}
+            for k in self.get:
+                if k != 'all':
+                    output[k] = self.get[k](year)
+            return output
+        self.get['all'] = get_all
+
+        def load_all(connection, files, year, force=False):
+            output = {}
+            for k in self.load:
+                if k != 'all':
+                    output[k] = self.load[k](connection, files[k], year, force)
+            return output
+        self.load['all'] = load_all
 
 
 registry = Registry()
