@@ -1,4 +1,5 @@
 import click
+from aiannh.commands import register_aiannh
 from bg.commands import register_bg
 from cd.commands import register_cd
 from fips.commands import register_fips
@@ -33,7 +34,8 @@ from zcta.commands import register_zcta
 
 #https://www2.census.gov/geo/pdfs/reference/mtfccs2021.pdf
 
-# TODO: need a way to add command groups such as "all" or "tribal"
+
+# TODO: need a way to add command groups such as "all"
 class Registry:
     def __init__(self):
         self.get = {}
@@ -41,6 +43,7 @@ class Registry:
 
 
 registry = Registry()
+register_aiannh(registry)
 register_bg(registry)
 register_cd(registry)
 register_fips(registry)
