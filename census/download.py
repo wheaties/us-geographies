@@ -4,9 +4,9 @@ from collections import namedtuple
 
 def _mtfcc_file(year):
     if year < 2017:
-        return 'https://www2.census.gov/geo/pdfs/reference/mtfcc.pdf'
+        return 'https://www2.census.gov/geo/pdfs/reference/mtfccs.pdf'
     else:
-        return f'https://www2.census.gov/geo/pdfs/reference/mtfcc{year}.pdf'
+        return f'https://www2.census.gov/geo/pdfs/reference/mtfccs{year}.pdf'
 
 
 def _funcstat_file(*args):
@@ -21,5 +21,5 @@ def _lsad_file(*args):
     return 'https://www2.census.gov/geo/pdfs/reference/LSADCodes.pdf'
 
 
-ReferenceFiles = namedtuple('ReferenceFiles', ['mtfcc', 'funcstat', 'class', 'lsad'])
+ReferenceFiles = namedtuple('ReferenceFiles', ['mtfcc', 'funcstat', 'class_code', 'lsad'])
 download_files = download_to_cls(ReferenceFiles, _mtfcc_file, _funcstat_file, _class_file, _lsad_file)

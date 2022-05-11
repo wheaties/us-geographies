@@ -2,6 +2,7 @@ import click
 from aiannh.commands import register_aiannh
 from bg.commands import register_bg
 from cd.commands import register_cd
+from census.commands import register_census
 from fips.commands import register_fips
 from iops.database import connect_db
 from metro.commands import register_metro
@@ -60,6 +61,7 @@ registry = Registry()
 register_aiannh(registry)
 register_bg(registry)
 register_cd(registry)
+register_census(registry)
 register_fips(registry)
 register_metro(registry)
 register_necta(registry)
