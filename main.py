@@ -3,6 +3,7 @@ from aiannh.commands import register_aiannh
 from bg.commands import register_bg
 from cd.commands import register_cd
 from census.commands import register_census
+from edge.commands import register_edge
 from fips.commands import register_fips
 from iops.database import connect_db
 from metro.commands import register_metro
@@ -20,14 +21,6 @@ from zcta.commands import register_zcta
 # see: https://www.nber.org/research/data/ssa-federal-information-processing-series-fips-state-and-county-crosswalk
 # see: https://postalpro.usps.com/address-quality/city-state-product
 # see: https://nces.ed.gov/programs/edge/Geographic/LocaleBoundaries <- these are their own
-#   https://nces.ed.gov/programs/edge/data/EDGE_Locale21_US.zip
-#   https://nces.ed.gov/programs/edge/data/edge_locale20_nces_all_us.zip
-#   https://nces.ed.gov/programs/edge/data/EDGE_Locale19_US.zip
-#   https://nces.ed.gov/programs/edge/data/EDGE_LOCALE18_US.zip
-#   https://nces.ed.gov/programs/edge/data/EDGE_LOCALE17_US.zip
-#   https://nces.ed.gov/programs/edge/data/EDGE_LOCALE16_US.zip
-#   https://nces.ed.gov/programs/edge/data/EDGE_LOCALE15_US.zip
-#   https://nces.ed.gov/programs/edge/data/EDGE_LOCALE14_NCES_ALL_US.zip
 # see: https://nces.ed.gov/programs/edge/Geographic/DistrictBoundaries <- these are Census
 #      https://nces.ed.gov/programs/edge/data/EDGESCHOOLDISTRICT_TL21_SY2021.zip
 # see: https://apps.nationalmap.gov/datasets/
@@ -66,6 +59,7 @@ register_aiannh(registry)
 register_bg(registry)
 register_cd(registry)
 register_census(registry)
+register_edge(registry)
 register_fips(registry)
 register_metro(registry)
 register_necta(registry)
