@@ -2,12 +2,11 @@ from itertools import pairwise
 import pdfplumber
 
 
-def parse_file(filename, skip_beginning=0, nullable_columns=None):
-    nullable_columns = nullable_columns or []
+def parse_file(filename, skip_beginning=0, skip_header=0):
     tables = _read_file(filename)
-    tables = list(_skip_rows(tables, skip_beginning))
+    tables = list(_skip_rows(tables, skip_beginning, skip_header))
     empty_columns = _index_empty_columns(tables)
-    _join_tables(tables, nullable_columns, empty_columns)
+    _join_tables(tables, empty_columns)
     output = []
     for table in tables:
         for row in table:
@@ -24,13 +23,13 @@ def _read_file(filename):
             yield page.extract_table()
 
 
-def _skip_rows(tables, skip=0):
+def _skip_rows(tables, skip=0, skip_header=0):
     for table in tables:
         size = len(table)
-        if skip > size:
-            skip -= size
+        if skip > size-skip_header:
+            skip -= (size-skip_header)
         else:
-            yield table[skip:size]
+            yield table[skip+skip_header:size]
             skip = 0
 
 
@@ -41,16 +40,14 @@ def _index_empty_columns(tables):
         matrix[idx] = False
         for table in tables:
             matrix[idx] |= any(row[idx] for row in table)
-    return [idx for idx in matrix if not matrix[idx]]
+    return [idx for idx in range(columns) if not matrix[idx]]
 
 
-def _join_tables(tables, nullable_columns, empty_columns):
-    allowed_blank = set(nullable_columns + empty_columns)
-
+def _join_tables(tables, empty_columns):
     def illegal_empty_columns(row):
         illegal = []
         for idx,value in enumerate(row):
-            if not value and idx not in allowed_blank:
+            if not value and idx not in empty_columns:
                 illegal.append(idx)
         return illegal
 
@@ -60,6 +57,6 @@ def _join_tables(tables, nullable_columns, empty_columns):
         if len(illegal_columns):
             row1 = t1[-1]
             for idx, col in enumerate(row1):
-                if idx not in nullable_columns and row2[idx]:
+                if row2[idx]:
                     row1[idx] = (col or '') + (row2[idx] or '')
             t2.pop(0)
