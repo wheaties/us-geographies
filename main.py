@@ -17,17 +17,21 @@ from zcta.commands import register_zcta
 # 6. crosswalk files
 #  a. https://udsmapper.org/zip-code-to-zcta-crosswalk/
 #  b. https://www.huduser.gov/portal/datasets/usps_crosswalk.html
-#  c. https://www2.census.gov/geo/docs/maps-data/data/rel/
 # see: https://www.nber.org/research/data/ssa-federal-information-processing-series-fips-state-and-county-crosswalk
 # see: https://postalpro.usps.com/address-quality/city-state-product
-# see: https://www2.census.gov/geo/docs/maps-data/data/rel/
-# see: https://nces.ed.gov/programs/edge/Geographic/LocaleBoundaries
-# see: https://nces.ed.gov/programs/edge/Geographic/DistrictBoundaries
+# see: https://nces.ed.gov/programs/edge/Geographic/LocaleBoundaries <- these are their own
+#   https://nces.ed.gov/programs/edge/data/EDGE_Locale21_US.zip
+#   https://nces.ed.gov/programs/edge/data/edge_locale20_nces_all_us.zip
+#   https://nces.ed.gov/programs/edge/data/EDGE_Locale19_US.zip
+#   https://nces.ed.gov/programs/edge/data/EDGE_LOCALE18_US.zip
+#   https://nces.ed.gov/programs/edge/data/EDGE_LOCALE17_US.zip
+#   https://nces.ed.gov/programs/edge/data/EDGE_LOCALE16_US.zip
+#   https://nces.ed.gov/programs/edge/data/EDGE_LOCALE15_US.zip
+#   https://nces.ed.gov/programs/edge/data/EDGE_LOCALE14_NCES_ALL_US.zip
+# see: https://nces.ed.gov/programs/edge/Geographic/DistrictBoundaries <- these are Census
 #      https://nces.ed.gov/programs/edge/data/EDGESCHOOLDISTRICT_TL21_SY2021.zip
-# see: https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2019/TGRSHP2019_TechDoc.pdf
 # see: https://apps.nationalmap.gov/datasets/
 
-#https://www2.census.gov/geo/pdfs/reference/mtfccs2021.pdf
 
 #https://nces.ed.gov/programs/edge/data/EDGE_GEOCODE_POSTSECONDARYSCH_2122.zip
 #https://nces.ed.gov/programs/edge/data/EDGE_GEOCODE_PUBLICSCH_2021.zip
