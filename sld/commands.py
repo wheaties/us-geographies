@@ -6,11 +6,8 @@ GROUP = 'sld'
 
 
 def load_files(connection, files, year, force):
-    for sf in files.sldl:
-        load_sldl_shapefile(connection, sf, year, force)
-
-    for sf in files.sldu:
-        load_sldu_shapefile(connection, sf, year, force)
+    load_sldl_shapefile(connection, files.sldl, year, force)
+    load_sldu_shapefile(connection, files.sldu, year, force)
 
 
 def register_sld(registry):

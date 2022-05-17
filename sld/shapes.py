@@ -1,5 +1,5 @@
 from iops.database import ShapeDataTable
-from iops.metadata import single_file_load
+from iops.metadata import multi_file_load
 from parsers.shapefile import parse_file
 
 
@@ -17,7 +17,7 @@ sldu_shapes.columns = ['statefp TEXT NOT NULL',
                        'intptlat TEXT NOT NULL',
                        'intptlon TEXT NOT NULL']
 
-load_sldu_shapefile = single_file_load(sldu_shapes, parse_file)
+load_sldu_shapefile = multi_file_load(sldu_shapes, parse_file)
 
 sldl_shapes = ShapeDataTable('sldl', 'sld')
 sldl_shapes.columns = ['statefp TEXT NOT NULL',
@@ -33,4 +33,4 @@ sldl_shapes.columns = ['statefp TEXT NOT NULL',
                        'intptlat TEXT NOT NULL',
                        'intptlon TEXT NOT NULL']
 
-load_sldl_shapefile = single_file_load(sldl_shapes, parse_file)
+load_sldl_shapefile = multi_file_load(sldl_shapes, parse_file)
