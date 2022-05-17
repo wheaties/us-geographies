@@ -7,30 +7,15 @@ from edge.commands import register_edge
 from fips.commands import register_fips
 from iops.database import connect_db
 from metro.commands import register_metro
-from necta.commands import register_necta
 from puma.commands import register_puma
 from sd.commands import register_sd
 from sld.commands import register_sld
 from tract.commands import register_tract
 from ua.commands import register_ua
 from zcta.commands import register_zcta
-# Goals:
-# 6. crosswalk files
-#  a. https://udsmapper.org/zip-code-to-zcta-crosswalk/
-#  b. https://www.huduser.gov/portal/datasets/usps_crosswalk.html
-# see: https://www.nber.org/research/data/ssa-federal-information-processing-series-fips-state-and-county-crosswalk
-# see: https://postalpro.usps.com/address-quality/city-state-product
-# see: https://nces.ed.gov/programs/edge/Geographic/LocaleBoundaries <- these are their own
-# see: https://nces.ed.gov/programs/edge/Geographic/DistrictBoundaries <- these are Census
-#      https://nces.ed.gov/programs/edge/data/EDGESCHOOLDISTRICT_TL21_SY2021.zip
-# see: https://apps.nationalmap.gov/datasets/
 
 
-#https://nces.ed.gov/programs/edge/data/EDGE_GEOCODE_POSTSECONDARYSCH_2122.zip
-#https://nces.ed.gov/programs/edge/data/EDGE_GEOCODE_PUBLICSCH_2021.zip
-
-
-class Registry:
+class _Registry:
     def __init__(self):
         self.get = {}
         self.load = {}
@@ -54,7 +39,7 @@ class Registry:
         self.load['all'] = load_all
 
 
-registry = Registry()
+registry = _Registry()
 register_aiannh(registry)
 register_bg(registry)
 register_cd(registry)
@@ -62,7 +47,6 @@ register_census(registry)
 register_edge(registry)
 register_fips(registry)
 register_metro(registry)
-register_necta(registry)
 register_puma(registry)
 register_sd(registry)
 register_sld(registry)
