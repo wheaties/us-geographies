@@ -61,13 +61,33 @@ register_zcta(registry)
 @click.argument('dataset', type=click.types.Choice(registry.get.keys(), False), nargs=-1)
 @click.argument('year', type=click.types.INT, nargs=1)
 def get(dataset, year, path, force):
+    """Retrieves various shapefiles and stores them locally.
+
+    \b
+    DATASET may be one or more of the following:
+         * aiannh - American Indian, Alaskan Native, and Native Hawaiian geographies, Census TIGER/Line shapefiles
+         * bg - Census Block Groups, TIGER/Line shape files
+         * cd - Congressional Districts, Census TIGER/Line shape files
+         * census - supporting documentation to identify codes within Census TIGER/Line shapefiles
+         * edge - NCES Locale Classifications
+         * fips - Federal Information Processing Series, Census TIGER/Line shape files
+         * metro - Metro/Micropolitan statical areas, Census TIGER/Line shape files
+         * puma - Public Use Microdata Area, Census TIGER/Line shape files
+         * sd - School Districts, Census TIGER/Line shape files
+         * sld - State Legislative Districts, Census TIGER/Line shape files
+         * tract - Census Tracts, TIGER/Line shape files
+         * ua - Urban Areas, Census TIGER/Line shape files
+         * zcta - Zip Code Tabulation Areas, Census TIGER/Line shape files
+
+        \b
+    YEAR may be any year from 2010 and above"""
     for ds in dataset:
         click.echo(f'Fetching {ds} for {year}.')
         registry.get[ds](year, path, force)
 
 
 @click.command()
-@click.option('--path', type=click.Path(), default=None, help='target location to write file(s).')
+@click.option('--path', type=click.Path(), default=None, help='target location to search for file(s).')
 @click.option('--force', is_flag=True, help='overwrite existing db tables.')
 @click.option('--dbname', default=None, help='db name, can be a connection string.')
 @click.option('--dbhost', default=None, help='db host, will be overridden if contained in dbname param.')
@@ -77,6 +97,23 @@ def get(dataset, year, path, force):
 @click.argument('dataset', type=click.types.Choice(registry.load.keys(), False), nargs=-1)
 @click.argument('year', type=click.types.INT, nargs=1)
 def load(dataset, year, path, force, dbname, dbhost, dbport, dbuser, dbpass):
+    """Loads the queried datasets into a PostgreSQL database using the supplied parameters.
+
+    \b
+    DATASET may be one or more of the following:
+     * aiannh - American Indian, Alaskan Native, and Native Hawaiian geographies, Census TIGER/Line shapefiles
+     * cd - Congressional Districts, Census TIGER/Line shape files
+     * census - supporting documentation to identify codes within Census TIGER/Line shapefiles
+     * fips - Federal Information Processing Series, Census TIGER/Line shape files
+     * metro - Metro/Micropolitan statical areas, Census TIGER/Line shape files
+     * puma - Public Use Microdata Area, Census TIGER/Line shape files
+     * sd - School Districts, Census TIGER/Line shape files
+     * sld - State Legislative Districts, Census TIGER/Line shape files
+     * tract - Census Tracts, TIGER/Line shape files
+     * ua - Urban Areas, Census TIGER/Line shape files
+
+    \b
+    YEAR may be any year from 2010 and above"""
     for ds in dataset:
         click.echo(f'Reading or obtaining {ds} files for {year}.')
         # if you want to force getting files, force at the 'get' command
