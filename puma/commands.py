@@ -6,8 +6,7 @@ GROUP = 'puma'
 
 
 def load_files(connection, files, year, force=False):
-    for sf in files:
-        load_puma_shapefile(connection, sf, year, force)
+    load_puma_shapefile(connection, files, year, force)
 
 
 def register_puma(registry):
