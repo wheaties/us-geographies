@@ -1,5 +1,5 @@
 from iops.database import ShapeDataTable
-from iops.metadata import single_file_load
+from iops.metadata import multi_file_load
 from parsers.shapefile import parse_file
 
 
@@ -17,4 +17,4 @@ tract_shapes.columns = ['statefp TEXT NOT NULL',
                         'intptlat TEXT NOT NULL',
                         'intptlon TEXT NOT NULL']
 
-load_tract_shapefile = single_file_load(tract_shapes, parse_file)
+load_files = multi_file_load(tract_shapes, parse_file)
