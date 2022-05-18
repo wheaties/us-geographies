@@ -19,5 +19,5 @@ The US government updates certain geographic features and delineations on a year
 ## Using this program
 
 Download the repo and run it like a local python script:
-```python main.py get metro 2020```
+```python -m usgeo get metro 2020```
 
